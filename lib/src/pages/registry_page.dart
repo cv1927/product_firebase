@@ -3,10 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:product_firebase/src/bloc/provider.dart';
 
 import 'package:product_firebase/src/providers/user_provider.dart';
-
 import 'package:product_firebase/src/utils/utils.dart';
 
-class LoginPage extends StatelessWidget {
+class RegistryPage extends StatelessWidget {
 
   final userProvider = new UserProvider();
 
@@ -16,13 +15,13 @@ class LoginPage extends StatelessWidget {
       body: Stack(
         children: <Widget>[
           _createBack(context),
-          _loginForm(context),
+          _registryForm(context),
         ],
       ),
     );
   }
 
-  Widget _loginForm(BuildContext context) {
+  Widget _registryForm(BuildContext context) {
 
     final bloc = Provider.of(context);
     final size = MediaQuery.of(context).size;
@@ -54,7 +53,7 @@ class LoginPage extends StatelessWidget {
             ),
             child: Column(
               children: <Widget>[
-                Text('Ingreso', style: TextStyle(fontSize: 20.0),),
+                Text('Registro', style: TextStyle(fontSize: 20.0),),
                 SizedBox( height: 60.0, ),
                 _createEmail( bloc ),
                 SizedBox( height: 30.0, ),
@@ -66,8 +65,8 @@ class LoginPage extends StatelessWidget {
           ),
 
           FlatButton(
-            child: Text('Crear una nueva cuenta'),
-            onPressed: () => Navigator.pushReplacementNamed(context, 'registry'),
+            child: Text('¿Ya tienes cuenta?'),
+            onPressed: () => Navigator.pushReplacementNamed(context, 'login'),
           ),
           SizedBox( height: 100.0, )
         ],
@@ -139,23 +138,23 @@ class LoginPage extends StatelessWidget {
           elevation: 0.0,
           color: Colors.deepPurple,
           textColor: Colors.white,
-          onPressed: snapshot.hasData ? () => _login(bloc,context) : null,
+          onPressed: snapshot.hasData ? () => _register(bloc,context) : null,
         );
       },
     );
 
   }
 
-  _login(LoginBloc bloc, BuildContext context) async {
-    
-    Map info = await userProvider.login(bloc.email, bloc.password);
+  _register(LoginBloc bloc, BuildContext context) async {
+
+    final info = await userProvider.newUser(bloc.email, bloc.password);
 
     if ( info['ok'] ) {
       Navigator.pushReplacementNamed(context, 'home');
     } else {
       mostrarAlerta( context, info['token'] );
     }
-    
+    // Navigator.pushReplacementNamed(context, 'home');
   }
 
   Widget _createBack(BuildContext context) {

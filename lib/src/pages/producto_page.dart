@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'package:product_firebase/src/providers/product_provider.dart';
+import 'package:product_firebase/src/bloc/provider.dart';
+//import 'package:product_firebase/src/providers/product_provider.dart';
 
 import 'package:product_firebase/src/utils/utils.dart' as utils;
 
@@ -18,14 +19,17 @@ class ProductoPage extends StatefulWidget {
 class _ProductoPageState extends State<ProductoPage> {
   final formKey = GlobalKey<FormState>();
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final productProvider = new ProductProvider();
+  //final productProvider = new ProductProvider();
 
+  ProductsBloc productsBloc;
   ProductModel product = new ProductModel();
   bool _save = false;
   File photo;
 
   @override
   Widget build(BuildContext context) {
+
+    productsBloc = Provider.productsBloc(context);
 
     final ProductModel prodData = ModalRoute.of(context).settings.arguments;
 
@@ -140,15 +144,18 @@ class _ProductoPageState extends State<ProductoPage> {
     setState(() { _save = true; });
 
     if ( photo != null ) {
-      product.photoUrl = await productProvider.uploadImage(photo);
+      //product.photoUrl = await productProvider.uploadImage(photo);
+      product.photoUrl = await productsBloc.addPhoto(photo);
     }
 
     if ( product.id == null ) {
 
-      productProvider.createProduct(product);
+      //productProvider.createProduct(product);
+      productsBloc.addProduct(product);
 
     }  else {
-      productProvider.updateProduct(product);
+      //productProvider.updateProduct(product);
+      productsBloc.addProduct(product);
     }
 
     //setState(() { _save = false; });
