@@ -20,6 +20,9 @@ void main() async {
 class FormValidation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final prefs = new PreferencesUser();
+    print( prefs.token );
+    
     return Provider(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

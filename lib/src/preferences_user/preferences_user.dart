@@ -2,7 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferencesUser {
 
-  static final PreferencesUser _instance = new PreferencesUser();
+  static final PreferencesUser _instance = new PreferencesUser._internal();
 
   factory PreferencesUser() {
     return _instance;

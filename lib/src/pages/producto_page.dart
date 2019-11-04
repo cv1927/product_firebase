@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:product_firebase/src/bloc/provider.dart';
-//import 'package:product_firebase/src/providers/product_provider.dart';
 
 import 'package:product_firebase/src/utils/utils.dart' as utils;
 
@@ -155,7 +154,7 @@ class _ProductoPageState extends State<ProductoPage> {
 
     }  else {
       //productProvider.updateProduct(product);
-      productsBloc.addProduct(product);
+      productsBloc.editProduct(product);
     }
 
     //setState(() { _save = false; });
@@ -178,14 +177,14 @@ class _ProductoPageState extends State<ProductoPage> {
 
       return FadeInImage(
         image: NetworkImage(product.photoUrl),
-        placeholder: AssetImage('assets/jar-loading-gif'),
+        placeholder: AssetImage('assets/images/jar-loading-gif'),
         height: 300.0,
         fit: BoxFit.contain,
       );
     } else {
 
       return Image(
-        image: AssetImage( photo?.path ?? 'assets/image/no-image.png'),
+        image: AssetImage( photo?.path ?? 'assets/images/no-image.png'),
         height: 300.0,
         fit: BoxFit.cover,
       );

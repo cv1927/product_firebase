@@ -22,6 +22,11 @@ class ProductProvider {
 
     final decodedData = json.decode(resp.body);
 
+    print('******************');
+    print('CREATE PRODUCT');
+    print(decodedData);
+    print('******************');
+
     return true;
   }
 
@@ -32,6 +37,11 @@ class ProductProvider {
     final resp = await http.put( url, body: productoModelToJson(product) );
 
     final decodedData = json.decode(resp.body);
+
+    print('******************');
+    print('UPDATE PRODUCT');
+    print(decodedData);
+    print('******************');
 
     return true;
   }
@@ -64,9 +74,14 @@ class ProductProvider {
 
   Future<int> deleteProduct(String id) async {
 
-    final url = '$_url/products>/$id.json?auth=${ _prefs.token }';
+    final url = '$_url/products/$id.json?auth=${ _prefs.token }';
 
     final resp = await http.delete(url);
+
+    print('******************');
+    print('DELETE PRODUCT');
+    print(resp);
+    print('******************');
 
     return 1;
 
